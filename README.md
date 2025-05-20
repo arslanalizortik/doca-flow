@@ -8,6 +8,8 @@
 - DPA program parses and logs HTTP request headers.
 
 ## Project Structure 
+
+```
 doca_http_parser/
 ├── meson.build
 ├── meson_options.txt
@@ -17,3 +19,4 @@ doca_http_parser/
 └── host/
     ├── main.cpp
     └── meson.build
+```
