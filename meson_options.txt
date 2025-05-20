@@ -1,0 +1,1 @@
+option('doca_sdk_path', type : 'string', value : '/opt/mellanox/doca', description : 'Path to DOCA SDK')
