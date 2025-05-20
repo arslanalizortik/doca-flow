@@ -11,12 +11,12 @@
 
 ```
 doca_http_parser/
-├── meson.build
-├── meson_options.txt
 ├── dpa/
 │   ├── http_parser_dpa.c
 │   └── meson.build
-└── host/
-    ├── main.cpp
-    └── meson.build
+├── host/
+│   ├── host_main.cpp
+│   └── meson.build
+├── meson.build
+
 ```
