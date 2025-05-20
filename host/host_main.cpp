@@ -1,9 +1,8 @@
-#include <doca_log.h>
 #include <doca_dpa.h>
 #include <doca_dpa_dev.h>
-
-#include <iostream>
+#include <doca_log.h>
 #include <cstring>
+#include <iostream>
 
 int main()
 {
@@ -12,28 +11,32 @@ int main()
 
     doca_dpa_t *dpa = nullptr;
     if (doca_dpa_create(nullptr, &dpa) != DOCA_SUCCESS) {
-        std::cerr << "Failed to create DPA instance\n";
+        std::cerr << "DPA init failed\n";
         return 1;
     }
 
     if (doca_dpa_load(dpa, "libhttp_parser_dpa.a") != DOCA_SUCCESS) {
-        std::cerr << "Failed to load DPA program\n";
+        std::cerr << "Failed to load DPA code\n";
         return 1;
     }
 
-    const char *http_req = "GET /index.html HTTP/1.1\r\nHost: example.com\r\nUser-Agent: curl/7.68.0\r\n\r\n";
-    size_t data_len = strlen(http_req);
+    const char *http_req =
+        "GET /index.html HTTP/1.1\r\n"
+        "Host: example.com\r\n"
+        "User-Agent: test-agent\r\n"
+        "Accept: */*\r\n\r\n";
 
     void *dpa_buf = nullptr;
-    if (doca_dpa_malloc(dpa, data_len, &dpa_buf) != DOCA_SUCCESS) {
-        std::cerr << "Failed to allocate DPA memory\n";
+    size_t len = strlen(http_req);
+    if (doca_dpa_malloc(dpa, len, &dpa_buf) != DOCA_SUCCESS) {
+        std::cerr << "DPA malloc failed\n";
         return 1;
     }
 
-    memcpy(dpa_buf, http_req, data_len);
+    memcpy(dpa_buf, http_req, len);
 
     if (doca_dpa_launch(dpa, "parse_http_header", dpa_buf) != DOCA_SUCCESS) {
-        std::cerr << "Failed to launch DPA function\n";
+        std::cerr << "Failed to launch\n";
         return 1;
     }
 

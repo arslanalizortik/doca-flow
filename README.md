@@ -20,3 +20,27 @@ doca_http_parser/
 ├── meson.build
 
 ```
+
+## Build and Run
+- Step1: Build DPA Code
+
+```
+cd dpa
+source /opt/mellanox/doca/setup_env.sh
+dpacc --hostcc gcc --mcpu=dpu -o libhttp_parser_dpa.a http_parser_dpa.c
+```
+
+- Step2: Build Host With Meson
+```
+cd ..
+meson setup build --prefix=/usr
+meson compile -C build
+
+```
+
+- Step3: Run the App
+```
+cd build
+sudo ./doca_http_parser
+
+```
